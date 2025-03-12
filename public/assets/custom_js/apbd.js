@@ -89,25 +89,19 @@ function modalEdit(elem) {
     var kunci_input = $(elem).data('kunci');
 
     if (kunci_input == 0) {
-        Swal.fire.fire({
+        Swal.fire({
             title: 'Jadwal Terkunci',
             // text: 'Data Sudah Input',
             icon: 'error',
-            customClass: {
-                confirmButton: 'btn btn-primary waves-effect waves-light'
-            },
-            buttonsStyling: false
+
         });
     } else {
         if (id_apbd == 0) {
-            Swal.fire.fire({
+            Swal.fire({
                 title: 'Gagal',
                 text: 'Data Tidak Ditemukan',
                 icon: 'error',
-                customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+
             });
         } else {
             var id_unit_apbd = $('#id_unit_apbd').val();
@@ -1012,34 +1006,49 @@ $('.fisik').keyup(function (e) {
     // });
 
 
-    $('#FormApbd').on('submit', function (e) {
-        e.preventDefault();
-        var postData = new FormData($("#FormApbd")[0]);
-        var csrfToken = $('meta[name="csrf-token"]').attr('content'); // Ambil token CSRF
-        postData.append('_token', csrfToken); // Sertakan token CSRF di FormData
-        $.ajax({
-            type: "post",
-            url: BASE_URL + "/apbd/update-apbd",
-            processData: false,
-            contentType: false,
-            data: postData,
-            dataType: "JSON",
-            success: function (data) {
-                if (data.success == false) {
 
-                    data.errors.forEach(function (error) {
-                        // Karena error adalah string, kita bisa langsung menampilkannya
-                        swal("Gagal Simpan Data", error, "warning");
+});
 
+$('#FormApbd').on('submit', function (e) {
+    e.preventDefault();
+    var postData = new FormData($("#FormApbd")[0]);
+    var csrfToken = $('meta[name="csrf-token"]').attr('content'); // Ambil token CSRF
+    postData.append('_token', csrfToken); // Sertakan token CSRF di FormData
+    $.ajax({
+        type: "POST",
+        url: BASE_URL + "/apbd/update-apbd",
+        processData: false,
+        contentType: false,
+        data: postData,
+        dataType: "JSON",
+        success: function (data) {
+            if (data.success == false) {
+
+                data.errors.forEach(function (error) {
+                    // Karena error adalah string, kita bisa langsung menampilkannya
+                    Swal.fire({
+                        title: "Gagal Simpan Data",
+                        text: error,
+                        icon: "warning",
+                        showConfirmButton: false,
+                        timer: 2000
                     });
-                } else if (data.success == true) {
-                    swal('Berhasil', 'Data telah disimpan', 'success');
-                    // $('#tblAktivitas').DataTable().ajax.reload(null, false);
-                    // $("#formAddAktivitas")[0].reset();
-                    // $('#modalAddAktivitas').modal('hide');
-                }
-            },
-        });
-        return false;
+
+                });
+            } else if (data.success == true) {
+                Swal.fire({
+                    title: 'Berhasil',
+                    text: 'Data telah disimpan',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+                var id_unit_apbd = $('#id_unit_apbd').val();
+                var bln = $('#bulan_apbd').val();
+                getData(id_unit_apbd, bln);
+                $('#modalApbd').modal('hide');
+            }
+        },
     });
+    return false;
 });

@@ -113,14 +113,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="" novalidate="" id="FormApbd" method="POST">
+                    <form id="FormApbd" method="POST">
                         @csrf
                         <input type="text" hidden class="form-control form-control-sm" id="id_unit" name="id_unit">
                         <input type="text" hidden class="form-control form-control-sm" id="id_bln" name="id_bln">
                         <hr>
-                        <div class="card">
+                        <div class="">
                             <div class="card-header">
-                                <h5 class="text-left">Total APBD</h5>
+
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -825,5 +825,5 @@
     @endsection
 
     @push('scripts')
-        <script src="{{ asset('assets/custom_js/apbd.js') }}"></script>
+        <script src="{{ asset('assets/custom_js/apbd.js') . '?t=' . time() }}"></script>
     @endpush

@@ -58,12 +58,11 @@ class ApbdController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function updateApbd(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
             [
-                'input' => 'required|string|max:255',
                 'id_unit' => 'required',
                 'id_bln' => 'required',
                 'pg_apbd' => 'required',
@@ -86,41 +85,39 @@ class ApbdController extends Controller
                 'rk_keu_bt_rp' => 'required',
                 'rk_keu_bt_per' => 'required',
                 'rf_bt' => 'required',
-                'permasalahan' => 'required',
+                'permasalahan' => 'nullable',
                 'pg_bl_peg' => 'required',
                 'rk_keu_peg_rp' => 'required',
                 'rk_keu_peg_per' => 'required',
                 'rf_peg' => 'required',
             ],
             [
-                'input.required' => 'Wajib diisi.',
-                'id_unit.required' => 'Wajib diisi.',
-                'id_bln.required' => 'Wajib diisi.',
-                'pg_apbd.required' => 'Wajib diisi.',
-                'real_apbd.required' => 'Wajib diisi.',
-                'real_apbd_per.required' => 'Wajib diisi.',
-                'real_apbd_fisik.required' => 'Wajib diisi.',
-                'pg_bl_op.required' => 'Wajib diisi.',
-                'rk_keu_op_rp.required' => 'Wajib diisi.',
-                'rk_keu_op_per.required' => 'Wajib diisi.',
-                'rf_op.required' => 'Wajib diisi.',
-                'pg_bl_bm.required' => 'Wajib diisi.',
-                'rk_keu_bm_rp.required' => 'Wajib diisi.',
-                'rk_keu_bm_per.required' => 'Wajib diisi.',
-                'rf_bm.required' => 'Wajib diisi.',
-                'pg_btt.required' => 'Wajib diisi.',
-                'rk_keu_btt_rp.required' => 'Wajib diisi.',
-                'rk_keu_btt_per.required' => 'Wajib diisi.',
-                'rf_btt.required' => 'Wajib diisi.',
-                'pg_bl_bt.required' => 'Wajib diisi.',
-                'rk_keu_bt_rp.required' => 'Wajib diisi.',
-                'rk_keu_bt_per.required' => 'Wajib diisi.',
-                'rf_bt.required' => 'Wajib diisi.',
-                'permasalahan.required' => 'Wajib diisi.',
-                'pg_bl_peg.required' => 'Wajib diisi.',
-                'rk_keu_peg_rp.required' => 'Wajib diisi.',
-                'rk_keu_peg_per.required' => 'Wajib diisi.',
-                'rf_peg.required' => 'Wajib diisi.',
+                'id_unit.required' => 'Unit wajib diisi.',
+                'id_bln.required' => 'Bulan wajib diisi.',
+                'pg_apbd.required' => 'Pagu APBD wajib diisi.',
+                'real_apbd.required' => 'Realisasi APBD wajib diisi.',
+                'real_apbd_per.required' => 'Persentase Realisasi APBD wajib diisi.',
+                'real_apbd_fisik.required' => 'Realisasi APBD Fisik wajib diisi.',
+                'pg_bl_op.required' => 'Pagu Belanja Operasional wajib diisi.',
+                'rk_keu_op_rp.required' => 'Rencana Keuangan Belanja Operasional (Rp) wajib diisi.',
+                'rk_keu_op_per.required' => 'Rencana Keuangan Belanja Operasional (%) wajib diisi.',
+                'rf_op.required' => 'Rencana Fisik Belanja Operasional wajib diisi.',
+                'pg_bl_bm.required' => 'Pagu Belanja Modal wajib diisi.',
+                'rk_keu_bm_rp.required' => 'Rencana Keuangan Belanja Modal (Rp) wajib diisi.',
+                'rk_keu_bm_per.required' => 'Rencana Keuangan Belanja Modal (%) wajib diisi.',
+                'rf_bm.required' => 'Rencana Fisik Belanja Modal wajib diisi.',
+                'pg_btt.required' => 'Pagu Belanja Tidak Terduga wajib diisi.',
+                'rk_keu_btt_rp.required' => 'Rencana Keuangan Belanja Tidak Terduga (Rp) wajib diisi.',
+                'rk_keu_btt_per.required' => 'Rencana Keuangan Belanja Tidak Terduga (%) wajib diisi.',
+                'rf_btt.required' => 'Rencana Fisik Belanja Tidak Terduga wajib diisi.',
+                'pg_bl_bt.required' => 'Pagu Belanja Transfer wajib diisi.',
+                'rk_keu_bt_rp.required' => 'Rencana Keuangan Belanja Transfer (Rp) wajib diisi.',
+                'rk_keu_bt_per.required' => 'Rencana Keuangan Belanja Transfer (%) wajib diisi.',
+                'rf_bt.required' => 'Rencana Fisik Belanja Transfer wajib diisi.',
+                'pg_bl_peg.required' => 'Pagu Belanja Pegawai wajib diisi.',
+                'rk_keu_peg_rp.required' => 'Rencana Keuangan Belanja Pegawai (Rp) wajib diisi.',
+                'rk_keu_peg_per.required' => 'Rencana Keuangan Belanja Pegawai (%) wajib diisi.',
+                'rf_peg.required' => 'Rencana Fisik Belanja Pegawai wajib diisi.',
 
             ]
         );
@@ -134,7 +131,7 @@ class ApbdController extends Controller
 
         //APBD
         $validatedApbd = [
-            'ta' => session('ta'),
+            'tahun' => session('ta'),
             'id_unit' => $request->input('id_unit'),
             'id_bln' => $request->input('id_bln'),
             'pg_apbd' => $request->input('pg_apbd'),
@@ -158,22 +155,37 @@ class ApbdController extends Controller
             'rk_keu_bt_per' => $request->input('rk_keu_bt_per'),
             'rf_bt' => $request->input('rf_bt'),
             'permasalahan' => $request->input('permasalahan'),
-            'pg_bl_peg' => $request->input('pg_bl_peg'),
-            'rk_keu_peg_rp' => $request->input('rk_keu_peg_rp'),
-            'rk_keu_peg_per' => $request->input('rk_keu_peg_per'),
-            'rf_peg' => $request->input('rf_peg'),
+            'status' => 1,
+
         ];
 
         //Tabel Pegawai
         $validatedPegawai = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bl_peg' => str_replace(',', '', $request->input('pg_bl_peg')),
             'rk_keu_peg_rp' => str_replace(',', '', $request->input('rk_keu_peg_rp')),
             'rk_keu_peg_per' => $request->input('rk_keu_peg_per'),
             'rf_peg' => $request->input('rf_peg'),
         ];
 
+        //Belanja Subsidi
+        $validatedSubsidi = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
+            'pg_bl_sub' => str_replace(',', '', $request->input('pg_bl_sub')),
+            'rk_keu_sub_rp' => str_replace(',', '', $request->input('rk_keu_sub_rp')),
+            'rk_keu_sub_per' => $request->input('rk_keu_sub_per'),
+            'rf_sub' => $request->input('rf_sub'),
+        ];
+
         //Barang Jasa
         $validatedBj = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bl_bj' => str_replace(',', '', $request->input('pg_bl_bj')),
             'rk_keu_bj_rp' => str_replace(',', '', $request->input('rk_keu_bj_rp')),
             'rk_keu_bj_per' => $request->input('rk_keu_bj_per'),
@@ -182,6 +194,9 @@ class ApbdController extends Controller
 
         //Hibah
         $validatedHibah = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bl_hibah' => str_replace(',', '', $request->input('pg_bl_hibah')),
             'rk_keu_hibah_rp' => str_replace(',', '', $request->input('rk_keu_hibah_rp')),
             'rk_keu_hibah_per' => $request->input('rk_keu_hibah_per'),
@@ -190,6 +205,9 @@ class ApbdController extends Controller
 
         //Bantuan Sosial
         $validatedBantuanSosial = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bl_bansos' => str_replace(',', '', $request->input('pg_bl_bansos')),
             'rk_keu_bansos_rp' => str_replace(',', '', $request->input('rk_keu_bansos_rp')),
             'rk_keu_bansos_per' => $request->input('rk_keu_bansos_per'),
@@ -198,6 +216,9 @@ class ApbdController extends Controller
 
         //BM Tanah
         $validatedBmTanah = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bm_tanah' => str_replace(',', '', $request->input('pg_bm_tanah')),
             'rk_keu_bm_tanah_rp' => str_replace(',', '', $request->input('rk_keu_bm_tanah_rp')),
             'rk_keu_bm_tanah_per' => $request->input('rk_keu_bm_tanah_per'),
@@ -206,6 +227,9 @@ class ApbdController extends Controller
 
         //BM Alat Mesin
         $validatedBmAlatMesin = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bm_alat_mesin' => str_replace(',', '', $request->input('pg_bm_alat_mesin')),
             'rk_keu_alat_mesin_rp' => str_replace(',', '', $request->input('rk_keu_alat_mesin_rp')),
             'rk_keu_alat_mesin_per' => $request->input('rk_keu_alat_mesin_per'),
@@ -222,6 +246,9 @@ class ApbdController extends Controller
 
         //BM Jalan
         $validatedBmJalan = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bm_jalan' => str_replace(',', '', $request->input('pg_bm_jalan')),
             'rk_keu_jalan_rp' => str_replace(',', '', $request->input('rk_keu_jalan_rp')),
             'rk_keu_jalan_per' => $request->input('rk_keu_jalan_per'),
@@ -230,6 +257,9 @@ class ApbdController extends Controller
 
         //BM Aset
         $validatedBmAset = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bm_aset' => str_replace(',', '', $request->input('pg_bm_aset')),
             'rk_keu_aset_rp' => str_replace(',', '', $request->input('rk_keu_aset_rp')),
             'rk_keu_aset_per' => $request->input('rk_keu_aset_per'),
@@ -238,6 +268,9 @@ class ApbdController extends Controller
 
         //Bagi Hasil
         $validatedBagiHasil = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bl_bagi_hasil' => str_replace(',', '', $request->input('pg_bl_bagi_hasil')),
             'rk_keu_bagi_hasil_rp' => str_replace(',', '', $request->input('rk_keu_bagi_hasil_rp')),
             'rk_keu_bagi_hasil_per' => $request->input('rk_keu_bagi_hasil_per'),
@@ -246,6 +279,9 @@ class ApbdController extends Controller
 
         //Bantuan Keu
         $validatedBantuanKeu = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bl_bantuan_keu' => str_replace(',', '', $request->input('pg_bl_bantuan_keu')),
             'rk_keu_bantuan_keu_rp' => str_replace(',', '', $request->input('rk_keu_bantuan_keu_rp')),
             'rk_keu_bantuan_keu_per' => $request->input('rk_keu_bantuan_keu_per'),
@@ -256,6 +292,9 @@ class ApbdController extends Controller
 
         try {
             DB::table('tbl_apbd')->where('id_bln', $validatedApbd['id_bln'])->where('id_unit', $validatedApbd['id_unit'])->update($validatedApbd);
+            DB::table('tbl_bl_pegawai')->where('id_bln', $validatedPegawai['id_bln'])->where('id_unit', $validatedPegawai['id_unit'])->update($validatedPegawai);
+            DB::table('tbl_bl_subsidi')->where('id_bln', $validatedSubsidi['id_bln'])->where('id_unit', $validatedSubsidi['id_unit'])->update($validatedSubsidi);
+            DB::table('tbl_bl_barang_jasa')->where('id_bln', $validatedBj['id_bln'])->where('id_unit', $validatedBj['id_unit'])->update($validatedBj);
             return response()->json(['success' => true, 'message' => 'Data berhasil ditambahkan.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e]);

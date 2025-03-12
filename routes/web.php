@@ -28,7 +28,7 @@ Route::middleware(['hak_akses:Superadmin,Operator'])->group(function () {
 
     Route::prefix('apbd')->group(function () {
         Route::get('/', [ApbdController::class, 'index']);
-        Route::post('/update-apbd', [ApbdController::class, 'update']);
+        Route::post('/update-apbd', [ApbdController::class, 'updateApbd']);
         Route::get('/get-apbd/{unit}/{bln}', [ApbdController::class, 'getApbd']);
         Route::get('/get-pagu/{unit}', [ApbdController::class, 'getPagu']);
     });
