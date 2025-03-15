@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Service\JadwalServiceContoller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,7 @@ class ApbdController extends Controller
             'title' => 'APBD',
             'unit' => DB::table('tbl_unit')->get()
         ];
-        return view('apbd', $data);
+        return view('apbd.index', $data);
     }
 
     public function getApbd(Request $request, $unit, $bln)
@@ -44,10 +45,7 @@ class ApbdController extends Controller
         }
 
         $data = $data->first();
-        $jadwalService = new JadwalServiceContoller();
-        if ($data) {
-            $data->kunci_input = $jadwalService->kunciInput($bln);
-        }
+
         return response()->json($data);
     }
 
@@ -134,24 +132,24 @@ class ApbdController extends Controller
             'tahun' => session('ta'),
             'id_unit' => $request->input('id_unit'),
             'id_bln' => $request->input('id_bln'),
-            'pg_apbd' => $request->input('pg_apbd'),
-            'real_apbd' => $request->input('real_apbd'),
+            'pg_apbd' => str_replace(',', '', $request->input('pg_apbd')),
+            'real_apbd' => str_replace(',', '', $request->input('real_apbd')),
             'real_apbd_per' => $request->input('real_apbd_per'),
             'real_apbd_fisik' => $request->input('real_apbd_fisik'),
-            'pg_bl_op' => $request->input('pg_bl_op'),
-            'rk_keu_op_rp' => $request->input('rk_keu_op_rp'),
+            'pg_bl_op' => str_replace(',', '', $request->input('pg_bl_op')),
+            'rk_keu_op_rp' => str_replace(',', '', $request->input('rk_keu_op_rp')),
             'rk_keu_op_per' => $request->input('rk_keu_op_per'),
             'rf_op' => $request->input('rf_op'),
-            'pg_bl_bm' => $request->input('pg_bl_bm'),
-            'rk_keu_bm_rp' => $request->input('rk_keu_bm_rp'),
+            'pg_bl_bm' => str_replace(',', '', $request->input('pg_bl_bm')),
+            'rk_keu_bm_rp' => str_replace(',', '', $request->input('rk_keu_bm_rp')),
             'rk_keu_bm_per' => $request->input('rk_keu_bm_per'),
             'rf_bm' => $request->input('rf_bm'),
-            'pg_btt' => $request->input('pg_btt'),
-            'rk_keu_btt_rp' => $request->input('rk_keu_btt_rp'),
+            'pg_btt' => str_replace(',', '', $request->input('pg_btt')),
+            'rk_keu_btt_rp' => str_replace(',', '', $request->input('rk_keu_btt_rp')),
             'rk_keu_btt_per' => $request->input('rk_keu_btt_per'),
             'rf_btt' => $request->input('rf_btt'),
-            'pg_bl_bt' => $request->input('pg_bl_bt'),
-            'rk_keu_bt_rp' => $request->input('rk_keu_bt_rp'),
+            'pg_bl_bt' => str_replace(',', '', $request->input('pg_bl_bt')),
+            'rk_keu_bt_rp' => str_replace(',', '', $request->input('rk_keu_bt_rp')),
             'rk_keu_bt_per' => $request->input('rk_keu_bt_per'),
             'rf_bt' => $request->input('rf_bt'),
             'permasalahan' => $request->input('permasalahan'),
@@ -295,9 +293,131 @@ class ApbdController extends Controller
             DB::table('tbl_bl_pegawai')->where('id_bln', $validatedPegawai['id_bln'])->where('id_unit', $validatedPegawai['id_unit'])->update($validatedPegawai);
             DB::table('tbl_bl_subsidi')->where('id_bln', $validatedSubsidi['id_bln'])->where('id_unit', $validatedSubsidi['id_unit'])->update($validatedSubsidi);
             DB::table('tbl_bl_barang_jasa')->where('id_bln', $validatedBj['id_bln'])->where('id_unit', $validatedBj['id_unit'])->update($validatedBj);
+            DB::table('tbl_bl_hibah')->where('id_bln', $validatedHibah['id_bln'])->where('id_unit', $validatedHibah['id_unit'])->update($validatedHibah);
+            DB::table('tbl_bl_bantuan_sosial')->where('id_bln', $validatedBantuanSosial['id_bln'])->where('id_unit', $validatedBantuanSosial['id_unit'])->update($validatedBantuanSosial);
             return response()->json(['success' => true, 'message' => 'Data berhasil ditambahkan.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e]);
         }
+    }
+
+    public function reportApbdFormI($id_bln, $id_unit)
+    {
+        $apbd = DB::table('tbl_apbd')
+            ->where('id_bln', $id_bln)
+            ->where('id_unit', $id_unit)
+            ->where('tahun', session('ta'))
+            ->get();
+
+        $unit = DB::table('tbl_unit')->where('id_unit', $id_unit)->first();
+
+        $data = [
+            'title' => 'Laporan APBD Form I',
+            'unit' => $unit,
+            'apbd' => $apbd,
+            'id_bln' => $id_bln
+
+        ];
+        // dd($data);
+        $pdf = Pdf::loadView('apbd.report_apbd_form_i', $data)
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setOption('isPhpEnabled', true)
+            ->setOption('font', 'path_to_font.ttf')
+            ->setPaper('Folio', 'landscape');
+
+        return $pdf->stream('laporan-apbd-' . \Carbon\Carbon::create(session('ta'), $id_bln)->locale('id_ID')->isoFormat('Y') . '-' . \Carbon\Carbon::create(session('ta'), $id_bln)->locale('id_ID')->monthName . '-' . $unit->nm_unit . '.pdf');
+    }
+
+    public function reportApbdFormII($id_bln, $id_unit)
+    {
+        $apbd = DB::table('tbl_bln')
+            ->select(
+                'tbl_apbd.*',
+                'tbl_unit.nm_unit',
+                'tbl_bl_bagi_hasil.*',
+                'tbl_bl_bantuan_keu.*',
+                'tbl_bl_bantuan_sosial.*',
+                'tbl_bl_barang_jasa.*',
+                'tbl_bl_hibah.*',
+                'tbl_bl_pegawai.*',
+                'tbl_bl_subsidi.*',
+                'tbl_bm_alat_mesin.*',
+                'tbl_bm_aset.*',
+                'tbl_bm_gedung_bangunan.*',
+                'tbl_bm_jalan.*',
+                'tbl_bm_tanah.*'
+            )
+            ->join('tbl_apbd', 'tbl_bln.id_bln', '=', 'tbl_apbd.id_bln')
+            ->join('tbl_unit', 'tbl_apbd.id_unit', '=', 'tbl_unit.id_unit')
+            ->join('tbl_bl_bagi_hasil', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_bagi_hasil.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_bagi_hasil.id_unit');
+            })
+            ->join('tbl_bl_bantuan_keu', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_bantuan_keu.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_bantuan_keu.id_unit');
+            })
+            ->join('tbl_bl_bantuan_sosial', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_bantuan_sosial.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_bantuan_sosial.id_unit');
+            })
+            ->join('tbl_bl_barang_jasa', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_barang_jasa.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_barang_jasa.id_unit');
+            })
+            ->join('tbl_bl_hibah', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_hibah.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_hibah.id_unit');
+            })
+            ->join('tbl_bl_pegawai', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_pegawai.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_pegawai.id_unit');
+            })
+            ->join('tbl_bl_subsidi', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bl_subsidi.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bl_subsidi.id_unit');
+            })
+            ->join('tbl_bm_alat_mesin', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bm_alat_mesin.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bm_alat_mesin.id_unit');
+            })
+            ->join('tbl_bm_aset', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bm_aset.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bm_aset.id_unit');
+            })
+            ->join('tbl_bm_gedung_bangunan', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bm_gedung_bangunan.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bm_gedung_bangunan.id_unit');
+            })
+            ->join('tbl_bm_jalan', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bm_jalan.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bm_jalan.id_unit');
+            })
+            ->join('tbl_bm_tanah', function ($join) {
+                $join->on('tbl_apbd.id_bln', '=', 'tbl_bm_tanah.id_bln')
+                    ->on('tbl_apbd.id_unit', '=', 'tbl_bm_tanah.id_unit');
+            })
+            ->where('tbl_apbd.id_bln', $id_bln)
+            ->where('tbl_apbd.id_unit', $id_unit)
+            ->where('tbl_apbd.tahun', session('ta'))
+            ->first();
+        $unit = DB::table('tbl_unit')->where('id_unit', $id_unit)->first();
+
+
+        $data = [
+            'title' => 'Laporan APBD Form II',
+            'unit' => $unit,
+            'apbd' => $apbd,
+            'id_bln' => $id_bln
+
+        ];
+        // dd($data);
+        $pdf = Pdf::loadView('apbd.report_apbd_form_ii', $data)
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setOption('isPhpEnabled', true)
+            ->setOption('font', 'path_to_font.ttf')
+            ->setPaper('Folio', 'potrait');
+
+        return $pdf->stream('laporan-apbd-' . \Carbon\Carbon::create(session('ta'), $id_bln)->locale('id_ID')->isoFormat('Y') . '-' . \Carbon\Carbon::create(session('ta'), $id_bln)->locale('id_ID')->monthName . '-' . $unit->nm_unit . '.pdf');
     }
 }

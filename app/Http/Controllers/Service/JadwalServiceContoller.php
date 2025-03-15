@@ -12,6 +12,6 @@ class JadwalServiceContoller extends Controller
     {
         $result = DB::table('tbl_bln')->select(DB::raw('case when tgl_awal < CURRENT_TIMESTAMP() AND CURRENT_TIMESTAMP()  < tgl_akhir then true else false
         end as kunci_bln'))->where('id_bln', $id_bln)->first();
-        return $result->kunci_bln;
+        return response()->json(['kunci_bln' => $result->kunci_bln]);
     }
 }

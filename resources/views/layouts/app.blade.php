@@ -100,22 +100,10 @@
                                     <script>
                                         document.write(new Date().getFullYear());
                                     </script>
-                                    , made with <span class="text-danger"><i class="tf-icons ri-heart-fill"></i></span>
-                                    by
-                                    <a href="https://pixinvent.com" target="_blank" class="footer-link">Pixinvent</a>
+                                    Bidang Perencanaan, Pengendalian Dan Evaluasi Pembangunan Daerah Baplitbangda Kab.
+                                    Bartim
                                 </div>
-                                <div class="d-none d-lg-inline-block">
-                                    <a href="https://themeforest.net/licenses/standard" class="footer-link me-4"
-                                        target="_blank">License</a>
-                                    <a href="https://1.envato.market/pixinvent_portfolio" target="_blank"
-                                        class="footer-link me-4">More Themes</a>
 
-                                    <a href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
-                                        target="_blank" class="footer-link me-4">Documentation</a>
-
-                                    <a href="https://pixinvent.ticksy.com/" target="_blank"
-                                        class="footer-link d-none d-sm-inline-block">Support</a>
-                                </div>
                             </div>
                         </div>
                     </footer>
@@ -164,7 +152,9 @@
     <!-- Page JS -->
     <script src="{{ url('/') }}/assets/js/dashboards-analytics.js"></script>
     <script src="{{ url('/') }}/assets/custom_js/core.js"></script>
+    <script src="{{ asset('assets/custom_js/rupiah.js') }}"></script>
     <script src="{{ asset('assets/currency/jquery.formatCurrency-1.4.0.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
     <script>
         var BASE_URL = '{{ url('/') }}';
         $('.rp').blur(function() {
