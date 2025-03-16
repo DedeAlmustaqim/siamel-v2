@@ -71,6 +71,9 @@
             </div>
         </div>
     </div>
+
+    @include('dak.partial.modal_dak_fisik')
+    @include('dak.partial.modal_dak_non_fisik')
 @endsection
 
 @section('style')

@@ -7,6 +7,7 @@
                 <div class="col-md-12 order-2 order-md-1">
                     <div class="card-body">
                         <div class="panel-body">
+
                             <h5 class=" mb-3 text-uppercase">Tentang</h5>
                             SISTEM INFORMASI ANGGARAN MONITORING EVALUASI DAN PELAPORAN
 
@@ -108,7 +109,7 @@
                                 <h6 class="mb-0">+94.15%</h6>
                             </div>
                             <div>
-                                <button class="btn btn-primary" type="button">view report</button>
+                                <button class="btn btn-primary" onclick="showSpinner()" type="button">view report</button>
                             </div>
                         </div>
                     </div>

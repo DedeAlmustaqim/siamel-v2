@@ -23,34 +23,34 @@
         rel="stylesheet" />
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/fonts/remixicon/remixicon.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/fonts/flag-icons.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/remixicon/remixicon.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/css/rtl/core.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/css/rtl/theme-default.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/css/demo.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/libs/swiper/swiper.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/css/pages/cards-statistics.css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/vendor/css/pages/cards-analytics.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-statistics.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-analytics.css') }}" />
 
 
     <!-- Helpers -->
-    <script src="{{ url('/') }}/assets/vendor/js/helpers.js"></script>
+    <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ url('/') }}/assets/js/config.js"></script>
+    <script src="{{ asset('assets/js/config.js') }}"></script>
     <style>
         .readonly-bg {
             background-color: #e9ecef !important;
@@ -83,7 +83,15 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row g-6">
+
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-6">
+                                <div id="time-remaining"></div>
+                            </div>
+                        </div>
+                        <div class="row g-4">
+
                             <!-- Gamification Card -->
                             @yield('content')
                         </div>
@@ -128,15 +136,15 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ url('/') }}/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/popper/popper.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/js/bootstrap.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/hammer/hammer.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/i18n/i18n.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/js/menu.js"></script>
+    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
 
     <!-- endbuild -->
 
@@ -145,13 +153,12 @@
     {{-- <!-- Vendors JS -->
     <script src="{{ url('/') }}/assets/vendor/libs/apex-charts/apexcharts.js"></script>
     <script src="{{ url('/') }}/assets/vendor/libs/swiper/swiper.js"></script> --}}
-
     <!-- Main JS -->
-    <script src="{{ url('/') }}/assets/js/main.js"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="{{ url('/') }}/assets/js/dashboards-analytics.js"></script>
-    <script src="{{ url('/') }}/assets/custom_js/core.js"></script>
+
+    <script src="{{ asset('assets/custom_js/core.js') }}"></script>
     <script src="{{ asset('assets/custom_js/rupiah.js') }}"></script>
     <script src="{{ asset('assets/currency/jquery.formatCurrency-1.4.0.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
@@ -176,6 +183,35 @@
                 this.selectionEnd = position;
             }
         });
+
+        function updateCountdown() {
+            var tglAkhir = new Date('{{ $jadwal->tgl_akhir }}').getTime();
+            var now = new Date().getTime();
+            var timeDiff = tglAkhir - now;
+
+            var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            var timeString = days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik";
+            if (timeDiff > 0) {
+                $('#time-remaining').html(
+                    `<div class="alert alert-solid-primary d-flex align-items-center" role="alert">
+                        <span class="alert-icon rounded">
+                            <i class="ri-timer-2-line"></i></span>
+                           Bulan Aktif {{ $jadwal->nama_bulan }} :
+                             ${timeString} </div>`);
+            } else {
+                $('#time-remaining').empty();
+            }
+
+            if (timeDiff > 0) {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+
+        updateCountdown();
     </script>
 
     @stack('scripts')

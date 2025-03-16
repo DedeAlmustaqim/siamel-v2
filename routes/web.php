@@ -59,10 +59,17 @@ Route::middleware(['hak_akses:Superadmin,Operator'])->group(function () {
 
     Route::prefix('dak')->group(function () {
         Route::get('/', [DakController::class, 'index']);
-        Route::get('/get-dak-fisik/{id_bln}/{unit}', [DakController::class, 'getDataDakFisik']);
-        Route::get('/get-dak-non-fisik/{id_bln}/{unit}', [DakController::class, 'getDataDakNonFisik']);
-        Route::get('/report-dak-fisik/{id_bln}/{unit}', [DakController::class, 'reportDakFisik']);
-        Route::get('/report-dak-non-fisik/{id_bln}/{unit}', [DakController::class, 'reportDakNonFisik']);
+        Route::get('/get-dak-fisik/{bln}/{unit}', [DakController::class, 'getDataDakFisik']);
+        Route::get('/get-dak-non-fisik/{bln}/{unit}', [DakController::class, 'getDataDakNonFisik']);
+
+        Route::post('/update-dak-fisik', [DakController::class, 'updateDakFisik']);
+        Route::post('/update-dak-non-fisik', [DakController::class, 'updateDakNonFisik']);
+
+        Route::get('/report-dak-fisik/{id_bln}/{id_unit}', [DakController::class, 'reportDakFisik']);
+        Route::get('/report-dak-non-fisik/{id_bln}/{id_unit}', [DakController::class, 'reportDakNonFisik']);
+
+        Route::get('/get-dak-fisik-by-id/{id}', [DakController::class, 'getDataDakFisikbyId']);
+        Route::get('/get-dak-non-fisik-by-id/{id}', [DakController::class, 'getDataDakNonFisikbyId']);
     });
 });
 
