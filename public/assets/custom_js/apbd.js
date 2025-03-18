@@ -76,7 +76,7 @@ function getData(id_unit, bln) {
                     .real_apbd_fisik : 0);
 
 
-                var btnApbd = `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" data-id="${response.id_apdb ?? 0}" data-bln="${bln}" onclick="modalEdit(this)"><i class="ri-pencil-line"></i>  Edit</button>
+                var btnApbd = `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" data-id="${response.id_apdb ?? 0}" data-bln="${bln}" onclick="modalEdit(this)">  Edit</button>
                         <a href="${BASE_URL}/apbd/report-form-i/${bln}/${id_unit}" target="_blank" class="btn btn-sm btn-secondary waves-effect waves-light"><i class="ri-printer-line"></i>&nbsp; Form I</a>
                         <a href="${BASE_URL}/apbd/report-form-ii/${bln}/${id_unit}" target="_blank" class="btn btn-sm btn-secondary waves-effect waves-light"><i class="ri-printer-line"></i>&nbsp; Form II</a>
                         `;

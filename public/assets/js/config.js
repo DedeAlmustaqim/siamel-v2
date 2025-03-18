@@ -87,16 +87,17 @@ TemplateCustomizer.LANGUAGES.fr = { ... };
  * defaultShowDropdownOnHover : true, false (for horizontal layout only)
  */
 
+
 if (typeof TemplateCustomizer !== 'undefined') {
   window.templateCustomizer = new TemplateCustomizer({
     cssPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
     themesPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
     displayCustomizer: true,
-    lang: localStorage.getItem('templateCustomizer-' + templateName + '--Lang') || 'en', // Set default language here
+    lang: localStorage.getItem('templateCustomizer-' + templateName + '--Lang') || 'id', // Set default language here
     // defaultTheme: 2,
     // defaultStyle: 'system',
     // defaultTextDir: 'rtl',
-    defaultContentLayout: 'wide',
+    // defaultContentLayout: 'compact',
     // defaultHeaderType: 'static',
     // defaultMenuCollapsed: true,
     // defaultNavbarType: 'sticky',

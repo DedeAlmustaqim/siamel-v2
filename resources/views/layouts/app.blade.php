@@ -22,6 +22,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
         rel="stylesheet" />
 
+
+
     <!-- Icons -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/remixicon/remixicon.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
@@ -49,6 +51,7 @@
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    {{-- <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script> --}}
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
     <style>
@@ -150,9 +153,8 @@
 
     <!-- Vendors JS -->
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-    {{-- <!-- Vendors JS -->
-    <script src="{{ url('/') }}/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-    <script src="{{ url('/') }}/assets/vendor/libs/swiper/swiper.js"></script> --}}
+    <!-- Vendors JS -->
+    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}/"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 

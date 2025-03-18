@@ -60,6 +60,14 @@
             <ul class="navbar-nav flex-row align-items-center ms-auto">
 
                 {{ session('ses_nm_unit') }}
+                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-4 me-xl-1">
+                    @if (session('hak_akses') == 'Superadmin')
+                        <a href="{{ url('presentasi') }}" class="btn btn-success waves-effect waves-light mb-1"
+                            type="button">
+                            <i class="ri-play-circle-line me-1"></i> Presentasi
+                        </a>
+                    @endif
+                </li>
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">

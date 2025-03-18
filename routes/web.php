@@ -4,7 +4,9 @@ use App\Http\Controllers\ApbdController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DakController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PendapatanController;
 use App\Http\Controllers\PpbjController;
+use App\Http\Controllers\PresentasiController;
 use App\Http\Controllers\Service\GrafikController;
 use App\Http\Controllers\Service\JadwalServiceContoller;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +45,7 @@ Route::middleware(['hak_akses:Superadmin,Operator'])->group(function () {
     Route::prefix('service')->group(function () {
         Route::prefix('grafik')->group(function () {
             Route::get('/apbd-skpd/{unit}', [GrafikController::class, 'getGrafikApbdSkpd']);
+            Route::get('/pendapatan-skpd/{unit}', [GrafikController::class, 'getGrafikPendapatanSkpd']);
         });
     });
 
@@ -71,7 +74,17 @@ Route::middleware(['hak_akses:Superadmin,Operator'])->group(function () {
         Route::get('/get-dak-fisik-by-id/{id}', [DakController::class, 'getDataDakFisikbyId']);
         Route::get('/get-dak-non-fisik-by-id/{id}', [DakController::class, 'getDataDakNonFisikbyId']);
     });
+
+    Route::prefix('pendapatan')->group(function () {
+        Route::get('/', [PendapatanController::class, 'index']);
+        Route::get('/get-pendapatan/{bln}/{unit}', [PendapatanController::class, 'getDatapendapatan']);
+        Route::post('/update', [PendapatanController::class, 'update']);
+        Route::get('/report-pendapatan/{bln}/{unit}', [PendapatanController::class, 'reportPendapatan']);
+    });
 });
 
+Route::middleware(['hak_akses:Superadmin'])->group(function () {
+    Route::get('/presentasi', [PresentasiController::class, 'index']);
+});
 
 //APBD
