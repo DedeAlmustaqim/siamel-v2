@@ -7,6 +7,7 @@
                 <div class="col-md-12 order-2 order-md-1">
                     <div class="card-body">
                         <div class="panel-body">
+                            <button type="button" class="btn btn-primary" onclick="cardBlock()">Click Me</button>
 
                             <h5 class=" mb-3 text-uppercase">Tentang</h5>
                             SISTEM INFORMASI ANGGARAN MONITORING EVALUASI DAN PELAPORAN

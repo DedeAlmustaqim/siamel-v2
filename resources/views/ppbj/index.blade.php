@@ -23,8 +23,9 @@
                     @endif
 
                     <div class="col-3">
+                   
                         <select id="bulan_apbd" class="form-select form-select-sm">
-                            <option value="">Pilih Bulan</option>
+                            <option value="" selected>Pilih Bulan</option>
                             <option value="1">Januari</option>
                             <option value="2">Februari</option>
                             <option value="3">Maret</option>

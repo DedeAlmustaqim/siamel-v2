@@ -37,6 +37,8 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
     <!-- Page CSS -->
 
@@ -136,54 +138,52 @@
                     <!-- Content -->
 
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <!-- Layout Demo -->
-                        <div class="layout-demo-wrapper">
-                            <div class="layout-demo-placeholder">
-                                <img src="../../assets/img/layouts/layout-horizontal-without-menu-light.png"
-                                    class="img-fluid" alt="Layout without menu"
-                                    data-app-light-img="layouts/layout-horizontal-without-menu-light.png"
-                                    data-app-dark-img="layouts/layout-horizontal-without-menu-dark.png" />
+                        <div class="row mb-5">
+
+                            <div class="col-3">
+                                <label>Pilih Bulan</label>
+                                <select id="bulan" class="select2 form-select form-select-lg"
+                                    data-allow-clear="true">
+                                    <option value="">Pilih Bulan</option>
+                                    <option value="1">Januari</option>
+                                    <option value="2">Februari</option>
+                                    <option value="3">Maret</option>
+                                    <option value="4">April</option>
+                                    <option value="5">Mei</option>
+                                    <option value="6">Juni</option>
+                                    <option value="7">Juli</option>
+                                    <option value="8">Agustus</option>
+                                    <option value="9">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
                             </div>
-                            <div class="layout-demo-info">
-                                <h4>Layout without Menu (Navigation)</h4>
-                                <button class="btn btn-primary" type="button" onclick="history.back()">Go
-                                    Back</button>
+                            <div class="col-4">
+                                <label>Pilih SKPD</label>
+                                <select id="id_unit" class="select2 form-select form-select-lg"
+                                    data-allow-clear="true">
+                                    <option value="">Pilih SKPD</option>
+                                    @foreach ($unit as $item)
+                                        <option value="{{ $item->id_unit }}">{{ $item->nm_unit }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-5">
+                                <div id="btnApbd"></div>
+
                             </div>
                         </div>
-                        <!--/ Layout Demo -->
+
+                        @include('presentasi.partial.apbd')
+                        @include('presentasi.partial.pendapatan')
+                        @include('presentasi.partial.tabel_ppbj')
+                        @include('presentasi.partial.dak')
                     </div>
+
                     <!--/ Content -->
 
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl">
-                            <div
-                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                                <div class="text-body mb-2 mb-md-0">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script>
-                                    , made with <span class="text-danger"><i
-                                            class="tf-icons ri-heart-fill"></i></span> by
-                                    <a href="https://pixinvent.com" target="_blank" class="footer-link">Pixinvent</a>
-                                </div>
-                                <div class="d-none d-lg-inline-block">
-                                    <a href="https://themeforest.net/licenses/standard" class="footer-link me-4"
-                                        target="_blank">License</a>
-                                    <a href="https://1.envato.market/pixinvent_portfolio" target="_blank"
-                                        class="footer-link me-4">More Themes</a>
-
-                                    <a href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
-                                        target="_blank" class="footer-link me-4">Documentation</a>
-
-                                    <a href="https://pixinvent.ticksy.com/" target="_blank"
-                                        class="footer-link d-none d-sm-inline-block">Support</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
+                    @include('partial.footer')
 
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -217,8 +217,16 @@
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
-
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+    <script src="{{ asset('assets/custom_js/rupiah.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <!-- Page JS -->
 </body>
+<script>
+    var BASE_URL = '{{ url('/') }}';
+</script>
+<script src="{{ asset('assets/custom_js/presentasi.js') }}"></script>
 
 </html>

@@ -295,6 +295,8 @@ class ApbdController extends Controller
             DB::table('tbl_bl_barang_jasa')->where('id_bln', $validatedBj['id_bln'])->where('id_unit', $validatedBj['id_unit'])->update($validatedBj);
             DB::table('tbl_bl_hibah')->where('id_bln', $validatedHibah['id_bln'])->where('id_unit', $validatedHibah['id_unit'])->update($validatedHibah);
             DB::table('tbl_bl_bantuan_sosial')->where('id_bln', $validatedBantuanSosial['id_bln'])->where('id_unit', $validatedBantuanSosial['id_unit'])->update($validatedBantuanSosial);
+            DB::table('tbl_bm_tanah')->where('id_bln', $validatedBmTanah['id_bln'])->where('id_unit', $validatedBmTanah['id_unit'])->update($validatedBmTanah);
+            DB::table('tbl_bm_alat_mesin')->where('id_bln', $validatedBmAlatMesin['id_bln'])->where('id_unit', $validatedBmAlatMesin['id_unit'])->update($validatedBmAlatMesin);
             return response()->json(['success' => true, 'message' => 'Data berhasil ditambahkan.']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e]);

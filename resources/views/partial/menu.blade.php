@@ -29,7 +29,15 @@
                     <div data-i18n="PENDAPATAN">PENDAPATAN</div>
                 </a>
             </li>
+            @if (session('hak_akses') == 'Superadmin')
+                <li class="menu-item {{ request()->is('rekapitulasi') ? 'active' : '' }}">
+                    <a href="javascript:void(0)" class="menu-link">
 
+                        <div data-i18n="REKAPITULASI">REKAPITULASI</div>
+                    </a>
+
+                </li>
+            @endif
         </ul>
     </div>
 </aside>

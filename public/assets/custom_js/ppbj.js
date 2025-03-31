@@ -166,29 +166,29 @@ function getGetppbj(id_bln, unit) {
         dataType: 'json',
         success: function (data) {
             if (data.status_ppbj_50 == 0) {
-                var stts_50 = '<span class="badge badge-danger badge-pill noti-icon-badge">Belum Input</span>'
+                var stts_50 = '<span class="badge bg-danger"">Belum Input</span>'
             } else {
-                var stts_50 = '<span class="badge badge-success badge-pill noti-icon-badge">Sudah Input</span>'
+                var stts_50 = '<span class="bbadge bg-success">Sudah Input</span>'
             }
             if (data.status_ppbj_200 == 0) {
-                var stts_200 = '<span class="badge badge-danger badge-pill noti-icon-badge">Belum Input</span>'
+                var stts_200 = '<span class="badge bg-danger">Belum Input</span>'
             } else {
-                var stts_200 = '<span class="badge badge-success badge-pill noti-icon-badge">Sudah Input</span>'
+                var stts_200 = '<span class="bbadge bg-success">Sudah Input</span>'
             }
             if (data.status_ppbj_200 == 0) {
-                var stts_200 = '<span class="badge badge-danger badge-pill noti-icon-badge">Belum Input</span>'
+                var stts_200 = '<span class="badge bg-danger">Belum Input</span>'
             } else {
-                var stts_200 = '<span class="badge badge-success badge-pill noti-icon-badge">Sudah Input</span>'
+                var stts_200 = '<span class="bbadge bg-success">Sudah Input</span>'
             }
             if (data.status_ppbj_25 == 0) {
-                var stts_25 = '<span class="badge badge-danger badge-pill noti-icon-badge">Belum Input</span>'
+                var stts_25 = '<span class="badge bg-danger">Belum Input</span>'
             } else {
-                var stts_25 = '<span class="badge badge-success badge-pill noti-icon-badge">Sudah Input</span>'
+                var stts_25 = '<span class="bbadge bg-success">Sudah Input</span>'
             }
             if (data.status_ppbj_25 == 0) {
-                var stts_25 = '<span class="badge badge-danger badge-pill noti-icon-badge">Belum Input</span>'
+                var stts_25 = '<span class="badge bg-danger">Belum Input</span>'
             } else {
-                var stts_25 = '<span class="badge badge-success badge-pill noti-icon-badge">Sudah Input</span>'
+                var stts_25 = '<span class="bbadge bg-success">Sudah Input</span>'
             }
             ppbj50 = `<td class="text-center">1</td>
                 <td><b>PAKET NON STRATEGIS (>RP. 50 JT S/D Rp. 200 JT)</b><br>${stts_50} </td>

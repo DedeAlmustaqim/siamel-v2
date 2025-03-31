@@ -101,24 +101,7 @@
                     </div>
                     <!--/ Content -->
 
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl">
-                            <div
-                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                                <div class="text-body mb-2 mb-md-0">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script>
-                                    Bidang Perencanaan, Pengendalian Dan Evaluasi Pembangunan Daerah Baplitbangda Kab.
-                                    Bartim
-                                </div>
-
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
+                    @include('partial.footer')
 
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -134,7 +117,7 @@
 
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
-
+    <div id="card-block"></div>
     <!--/ Layout wrapper -->
 
     <!-- Core JS -->
@@ -164,11 +147,11 @@
     <script src="{{ asset('assets/custom_js/rupiah.js') }}"></script>
     <script src="{{ asset('assets/currency/jquery.formatCurrency-1.4.0.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/block-ui/block-ui.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
     <script>
         var BASE_URL = '{{ url('/') }}';
-        $('.rp').blur(function() {
-            $('.rp').formatCurrency();
-        });
+
 
         $('.decimal').keyup(function() {
             var position = this.selectionStart - 1;
@@ -214,6 +197,21 @@
         }
 
         updateCountdown();
+
+        function cardBlock() {
+            $('#card-block').block({
+                message: '<div class="d-flex justify-content-center"><p class="mb-0">Harap Tunggu...</p> <div class="sk-wave m-0"><div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div></div> </div>',
+                timeout: 1000,
+                css: {
+                    backgroundColor: 'transparent',
+                    color: '#fff',
+                    border: '0'
+                },
+                overlayCSS: {
+                    opacity: 0.5
+                }
+            });
+        }
     </script>
 
     @stack('scripts')

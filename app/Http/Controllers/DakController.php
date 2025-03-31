@@ -103,9 +103,9 @@ class DakController extends Controller
         $data = DB::table('tbl_dak_fisik')->where('id_dak_fisik', $id)->first();
 
         if ($data) {
-            return response()->json($data, Response::HTTP_OK);
+            return response()->json(['success' => true, 'data' => $data], Response::HTTP_OK);
         } else {
-            return response()->json(['message' => 'Not found'], Response::HTTP_NOT_FOUND);
+            return response()->json(['success' => false, 'message' => 'Not found'], Response::HTTP_NOT_FOUND);
         }
     }
 
