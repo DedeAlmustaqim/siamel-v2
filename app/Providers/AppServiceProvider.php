@@ -43,7 +43,8 @@ class AppServiceProvider extends ServiceProvider
             ->first();
 
 
-
+        $pemda = DB::table('tbl_pemda')->first();
+        View::share('pemda', $pemda);
         View::share('jadwal', $jadwal);
     }
 }

@@ -22,6 +22,29 @@ class PpbjController extends Controller
     public function getPpbj($id_bln, $unit)
     {
 
+        $ppbj50 = DB::table('tbl_ppbj_50')
+            ->select(
+                'tbl_ppbj_50.id_ppbj_50',
+                'tbl_ppbj_50.id_bln',
+                'tbl_ppbj_50.tahun',
+                'tbl_ppbj_50.id_unit',
+                DB::raw('sum(tbl_ppbj_50.jml_pkt_50) as jml_pkt_50'), //jumlahkan
+                DB::raw('sum(tbl_ppbj_50.jml_pg_50) as jml_pg_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.pl_pkt_50) as pl_pkt_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.pl_rp_50) as pl_rp_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.h_pl_pkt_50) as h_pl_pkt_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.h_pl_rp_50) as h_pl_rp_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.kontrak_pkt_50) as kontrak_pkt_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.kontrak_rp_50) as kontrak_rp_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.st_pkt_50) as st_pkt_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.st_rp_50) as st_rp_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.bp_pkt_50) as bp_pkt_50'),//jumlahkan
+                DB::raw('sum(tbl_ppbj_50.bp_rp_50) as bp_rp_50'),//jumlahkan
+                'tbl_ppbj_50.status_ppbj_50'
+            )
+            ->groupBy('id_ppbj_50', 'id_bln', 'tahun', 'id_unit')
+            ->get();
+
         $ppbj50 = DB::table('tbl_ppbj_50')->where('id_unit', $unit)->where('id_bln', $id_bln)->where('tahun', session('ta'))->first();
         $ppbj200 = DB::table('tbl_ppbj_200')->where('id_unit', $unit)->where('id_bln', $id_bln)->where('tahun', session('ta'))->first();
         $ppbj25 = DB::table('tbl_ppbj_25')->where('id_unit', $unit)->where('id_bln', $id_bln)->where('tahun', session('ta'))->first();

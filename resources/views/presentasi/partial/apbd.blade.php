@@ -1,6 +1,7 @@
-<div class="row mb-5">
-    <div class="col-md-8 col-xxl-7">
-        <div class="card">
+<div class="card mb-5">
+    <div class="row">
+        <div class="col-md-8 col-xxl-7">
+
             <h5 class="card-header text-center">TABEL REALISASI KEUANGAN DAN FISIK APBD</h5>
             <div class="card-body">
                 <div id="status_apbd" class="mb-5"></div>
@@ -65,11 +66,10 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
-    </div>
-    <div class="col-md-8 col-xxl-5">
-        <div class="card">
+        <div class="col-md-4 col-xxl-5">
             <div class="card-header header-elements">
                 <h5 class="card-title mb-0">Grafik APBD</h5>
 

@@ -227,6 +227,6 @@
 <script>
     var BASE_URL = '{{ url('/') }}';
 </script>
-<script src="{{ asset('assets/custom_js/presentasi.js') }}"></script>
+<script src="{{ asset('assets/custom_js/presentasi.js') . '?t=' . time() }}"></script>
 
 </html>

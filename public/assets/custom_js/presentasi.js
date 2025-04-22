@@ -4,31 +4,21 @@ $(document).ready(function () {
     $('#id_unit').on('change', function () {
         var unit = $(this).val();
         var bln = $('#bulan').val();
-        if (unit != '' && bln != '') {
-            Swal.fire({
-                text: 'Menampilkan Data  ' + $('#id_unit').find('option:selected').text(),
-                title: '',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500,
-            }).then(function () {
-                getData(unit, bln);
-                grafik_apdb();
-                getGetppbj(bln, unit)
-                show_pd(bln, unit)
-                grafik_pendapatan();
-                showDak(bln, unit);
-            });
-        }
+        getData(unit, bln);
+        grafik_apdb();
+        getGetppbj(bln, unit)
+        show_pd(bln, unit)
+        grafik_pendapatan();
+        showDak(bln, unit);
     });
 
 
     $('#bulan').on('change', function () {
         var bln = $(this).val();
         var unit = $('#id_unit').val();
-        if (unit != '' && bln != '') {
+        if (unit != '') {
             Swal.fire({
-                text: 'Menampilkan Data  ' + $('#id_unit').find('option:selected').text(),
+                text: 'Menampilkan Data  ' + $('#bulan').find('option:selected').text(),
                 title: '',
                 icon: 'success',
                 showConfirmButton: false,

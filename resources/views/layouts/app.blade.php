@@ -46,6 +46,7 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-statistics.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-analytics.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
 
 
     <!-- Helpers -->
@@ -88,7 +89,14 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
 
                         <div class="row">
-                            <div class="col-6"></div>
+                            <div class="col-6">
+                                @if (session('hak_akses') == 'Operator')
+                                    <div id="sinkronisasi-wrapper">
+                                        <!-- Isi akan diganti oleh JS -->
+                                    </div>
+                                @endif
+
+                            </div>
                             <div class="col-6">
                                 <div id="time-remaining"></div>
                             </div>
@@ -149,6 +157,7 @@
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/block-ui/block-ui.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
     <script>
         var BASE_URL = '{{ url('/') }}';
 
@@ -212,6 +221,78 @@
                 }
             });
         }
+
+        $(document).ready(function() {
+            $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+                return {
+                    "iResponsive": true,
+                    "iStart": oSettings._iDisplayStart,
+                    "iEnd": oSettings.fnDisplayEnd(),
+                    "iLength": oSettings._iDisplayLength,
+                    "iTotal": oSettings.fnRecordsTotal(),
+                    "iFilteredTotal": oSettings.fnRecordsDisplay(),
+                    "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+                    "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+                };
+            };
+            $.ajax({
+                url: BASE_URL + '/service/sinkron', // Endpoint GET untuk cek status sinkron
+                method: 'GET',
+                success: function(response) {
+                    if (response === false) {
+                        $('#sinkronisasi-wrapper').html(`
+                <button id="btn-sinkron" class="btn btn-danger">Sinkron Data</button><br>
+                <small class="text-danger">Anda belum melakukan sinkronisasi data tahun sekarang, klik pada tombol di atas untuk sinkronisasi data</small>
+            `);
+
+                        // Tombol sinkronisasi diklik
+                        $('#btn-sinkron').on('click', function() {
+                            $(this).prop('disabled', true).text('Menyinkronkan...');
+
+                            $.ajax({
+                                url: BASE_URL +
+                                    '/service/sinkron', // Endpoint POST untuk proses sinkron
+                                method: 'POST',
+                                data: {
+                                    _token: $('meta[name="csrf-token"]').attr(
+                                        'content') // CSRF token Laravel
+                                },
+                                success: function(res) {
+                                    if (res.success) {
+                                        $('#sinkronisasi-wrapper').html(`
+                                <span class="badge bg-success">${res.message}</span>
+                            `);
+                                    } else {
+                                        $('#sinkronisasi-wrapper').append(`
+                                <div class="text-danger mt-2">${res.message}</div>
+                            `);
+                                        $('#btn-sinkron').prop('disabled', false)
+                                            .text('Sinkron Data');
+                                    }
+                                },
+                                error: function() {
+                                    $('#sinkronisasi-wrapper').append(`
+                            <div class="text-danger mt-2">Terjadi kesalahan saat proses sinkronisasi.</div>
+                        `);
+                                    $('#btn-sinkron').prop('disabled', false).text(
+                                        'Sinkron Data');
+                                }
+                            });
+                        });
+                    } else {
+                        $('#sinkronisasi-wrapper').html(`
+                <span class="badge bg-success">Sudah Sinkron</span>
+            `);
+                    }
+                },
+                error: function() {
+                    $('#sinkronisasi-wrapper').html(`
+            <span class="text-danger">Gagal mengecek status sinkronisasi.</span>
+        `);
+                }
+            });
+
+        });
     </script>
 
     @stack('scripts')

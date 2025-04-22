@@ -31,11 +31,31 @@
             </li>
             @if (session('hak_akses') == 'Superadmin')
                 <li class="menu-item {{ request()->is('rekapitulasi') ? 'active' : '' }}">
-                    <a href="javascript:void(0)" class="menu-link">
+                    <a href="{{ url('/rekapitulasi') }}" class="menu-link">
 
                         <div data-i18n="REKAPITULASI">REKAPITULASI</div>
                     </a>
 
+                </li>
+
+                <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        {{-- <i class="menu-icon tf-icons ri-donut-chart-line"></i> --}}
+                        <div data-i18n="PENGATURAN">PENGATURAN</div>
+                    </a>
+                    <ul class="menu-sub">
+
+                        <li class="menu-item">
+                            <a href="{{ url('/setting/skpd') }}" class="menu-link">
+
+                                <div data-i18n="SKPD">SKPD</div>
+                            </a>
+                            <a href="{{ url('/setting/jadwal') }}" class="menu-link">
+
+                                <div data-i18n="JADWAL">JADWAL</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endif
         </ul>

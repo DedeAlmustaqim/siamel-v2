@@ -7,8 +7,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PendapatanController;
 use App\Http\Controllers\PpbjController;
 use App\Http\Controllers\PresentasiController;
+use App\Http\Controllers\RekapitulasiController;
 use App\Http\Controllers\Service\GrafikController;
 use App\Http\Controllers\Service\JadwalServiceContoller;
+use App\Http\Controllers\Service\SinkronServiceController;
+use App\Http\Controllers\Setting\JadwalController;
+use App\Http\Controllers\Setting\SkpdController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +51,8 @@ Route::middleware(['hak_akses:Superadmin,Operator'])->group(function () {
             Route::get('/apbd-skpd/{unit}', [GrafikController::class, 'getGrafikApbdSkpd']);
             Route::get('/pendapatan-skpd/{unit}', [GrafikController::class, 'getGrafikPendapatanSkpd']);
         });
+        Route::get('/sinkron', [SinkronServiceController::class, 'btnSinkron']);
+        Route::post('/sinkron', [SinkronServiceController::class, 'sinkron']);
     });
 
     Route::prefix('ppbj')->group(function () {
@@ -85,6 +91,47 @@ Route::middleware(['hak_akses:Superadmin,Operator'])->group(function () {
 
 Route::middleware(['hak_akses:Superadmin'])->group(function () {
     Route::get('/presentasi', [PresentasiController::class, 'index']);
+
+    Route::prefix('rekapitulasi')->group(function () {
+        Route::get('', [RekapitulasiController::class, 'index']);
+        Route::get('/apbd/{bln}', [RekapitulasiController::class, 'apbd']);
+        Route::get('/pendapatan/{bln}', [RekapitulasiController::class, 'pendapatan']);
+        Route::get('/ppbj/{bln}', [RekapitulasiController::class, 'getPpbj']);
+        Route::get('/dak/{bln}', [RekapitulasiController::class, 'getDak']);
+        Route::get('/report-apbd/{bln}', [RekapitulasiController::class, 'reportApbd']);
+        Route::get('/report-pendapatan/{bln}', [RekapitulasiController::class, 'reportPd']);
+        Route::get('/report-ppbj-50/{bln}', [RekapitulasiController::class, 'reportPpbj50']);
+        Route::get('/report-ppbj-200/{bln}', [RekapitulasiController::class, 'reportPpbj200']);
+        Route::get('/report-ppbj-25/{bln}', [RekapitulasiController::class, 'reportPpbj25']);
+        Route::get('/report-dak-fisik/{bln}', [RekapitulasiController::class, 'reportDakFisik']);
+        Route::get('/report-dak-non-fisik/{bln}', [RekapitulasiController::class, 'reportDakNonFisik']);
+        Route::get('/grafik-apbd', [RekapitulasiController::class, 'grafikapbd']);
+        Route::get('/grafik-pd', [RekapitulasiController::class, 'grafikPd']);
+    });
+
+    Route::prefix('setting')->group(function () {
+
+        Route::prefix('user')->group(function () {
+            Route::get('/get-user/{id}', [SkpdController::class, 'getUser']);
+            Route::post('/reset-pass/{id}', [SkpdController::class, 'reset_pass']);
+        });
+
+        Route::prefix('skpd')->group(function () {
+            Route::get('/', [SkpdController::class, 'index']);
+            Route::get('/get-skpd', [SkpdController::class, 'getDatatablesSkpd']);
+            Route::get('/get-skpd-by-id/{id}', [SkpdController::class, 'getSkpdById']);
+            Route::get('/get-pagu/{id}', [SkpdController::class, 'getPagu']);
+            Route::post('/update-pagu/', [SkpdController::class, 'updatePagu']);
+        });
+
+        Route::prefix('jadwal')->group(function () {
+            Route::get('/', [JadwalController::class, 'index']);
+            Route::post('/update', [JadwalController::class, 'update']);
+            Route::get('/get-bln', [JadwalController::class, 'getDatatablesBln']);
+            Route::get('/get-bln-by-id/{id}', [JadwalController::class, 'getDataBlnbyId']);
+            Route::post('/aktivasi/{id}', [JadwalController::class, 'updateAktif']);
+        });
+    });
 });
 
 //APBD

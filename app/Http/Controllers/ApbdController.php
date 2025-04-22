@@ -236,6 +236,9 @@ class ApbdController extends Controller
 
         //BM Gedung
         $validatedBmGedung = [
+            'tahun' => session('ta'),
+            'id_unit' => $request->input('id_unit'),
+            'id_bln' => $request->input('id_bln'),
             'pg_bm_gedung' => str_replace(',', '', $request->input('pg_bm_gedung')),
             'rk_keu_gedung_rp' => str_replace(',', '', $request->input('rk_keu_gedung_rp')),
             'rk_keu_gedung_per' => $request->input('rk_keu_gedung_per'),
@@ -297,9 +300,14 @@ class ApbdController extends Controller
             DB::table('tbl_bl_bantuan_sosial')->where('id_bln', $validatedBantuanSosial['id_bln'])->where('id_unit', $validatedBantuanSosial['id_unit'])->update($validatedBantuanSosial);
             DB::table('tbl_bm_tanah')->where('id_bln', $validatedBmTanah['id_bln'])->where('id_unit', $validatedBmTanah['id_unit'])->update($validatedBmTanah);
             DB::table('tbl_bm_alat_mesin')->where('id_bln', $validatedBmAlatMesin['id_bln'])->where('id_unit', $validatedBmAlatMesin['id_unit'])->update($validatedBmAlatMesin);
+            DB::table('tbl_bm_gedung_bangunan')->where('id_bln', $validatedBmGedung['id_bln'])->where('id_unit', $validatedBmGedung['id_unit'])->update($validatedBmGedung);
+            DB::table('tbl_bm_jalan')->where('id_bln', $validatedBmJalan['id_bln'])->where('id_unit', $validatedBmJalan['id_unit'])->update($validatedBmJalan);
+            DB::table('tbl_bm_aset')->where('id_bln', $validatedBmAset['id_bln'])->where('id_unit', $validatedBmAset['id_unit'])->update($validatedBmAset);
+            DB::table('tbl_bl_bagi_hasil')->where('id_bln', $validatedBagiHasil['id_bln'])->where('id_unit', $validatedBagiHasil['id_unit'])->update($validatedBagiHasil);
+            DB::table('tbl_bl_bantuan_keu')->where('id_bln', $validatedBantuanKeu['id_bln'])->where('id_unit', $validatedBantuanKeu['id_unit'])->update($validatedBantuanKeu);
             return response()->json(['success' => true, 'message' => 'Data berhasil ditambahkan.']);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
